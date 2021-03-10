@@ -1,0 +1,18 @@
+version: '2.3'
+
+services:
+    fluentbit:
+        image: fluent/fluent-bit:1.7.2
+        container_name: fluentbit
+        command: "/fluent-bit/bin/fluent-bit -c /configs/config.conf"
+        ports:
+            - "24224:24224/tcp"
+            - "24224:24224/udp"
+        networks:
+            - fluentbit_network
+        volumes:
+            - ./config.conf:/configs/config.conf
+            - ./parsers.conf:/configs/parsers.conf
+
+networks:
+    fluentbit_network:
