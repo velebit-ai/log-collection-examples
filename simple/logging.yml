@@ -8,11 +8,6 @@ services:
         ports:
             - "24224:24224/tcp"
             - "24224:24224/udp"
-        networks:
-            - fluentbit_network
         volumes:
             - ./config.conf:/configs/config.conf
             - ./parsers.conf:/configs/parsers.conf
-
-networks:
-    fluentbit_network:

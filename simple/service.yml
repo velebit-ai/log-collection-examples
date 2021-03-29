@@ -15,12 +15,7 @@ services:
                 done'
         environment:
             SERVICE_NAME: log_creator
-        networks:
-            - log_creator_network
         logging:
             driver: fluentd
             options:
                 env: SERVICE_NAME
-
-networks:
-    log_creator_network:
