@@ -1,0 +1,38 @@
+version: '2.3'
+
+services:
+    elasticsearch:
+        image: elasticsearch:7.8.0
+        ports:
+            - "9200:9200"
+        environment:
+            ES_JAVA_OPTS: "-Xms1g -Xmx1g"
+            discovery.type: "single-node"
+        volumes:
+            - elasticsearch-data:/usr/share/elasticsearch/data
+
+    kibana:
+        image: kibana:7.8.0
+        ports:
+            - "5601:5601"
+
+    grafana:
+        image: grafana/grafana:6.5.2
+        ports:
+            - "3000:3000"
+        volumes:
+            - grafana-data:/var/lib/grafana
+
+    fluentbit:
+        image: fluent/fluent-bit:1.4.6
+        command: "/fluent-bit/bin/fluent-bit -c /configs/config.conf"
+        ports:
+            - "24224:24224/tcp"
+            - "24224:24224/udp"
+        volumes:
+            - ./config.conf:/configs/config.conf
+            - ./parsers.conf:/configs/parsers.conf
+
+volumes:
+    elasticsearch-data:
+    grafana-data:
